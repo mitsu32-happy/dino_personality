@@ -66,9 +66,10 @@ Composition/framing: wide rounded rectangle button, no text, no icon, no logo.
 Use case: stylized-concept  
 Asset type: result page realistic dinosaur illustration  
 Primary request: A semi-realistic clean key visual of `{dinosaur}` for a Japanese dinosaur personality diagnosis result. It should express `{personality_mood}`. Powerful and cool, but not horror.  
-Scene/backdrop: ancient jungle at night with amber and turquoise rim light.  
+Scene/backdrop: perfectly flat solid #ff00ff chroma-key background for background removal.  
 Style/medium: premium mobile game key visual, semi-realistic dinosaur illustration.  
-Composition/framing: 4:3 landscape, dinosaur visible from torso/body with dynamic pose, no text, no watermark.  
+Composition/framing: 4:3 landscape, dinosaur visible from torso/body with dynamic pose, full subject separated from background, generous padding, no text, no watermark.  
+Constraints: The background must be one uniform #ff00ff color with no shadows, gradients, texture, reflections, floor plane, or lighting variation. Do not use #ff00ff anywhere in the subject. No cast shadow, no contact shadow, no reflection.
 
 ### マスコット恐竜
 
