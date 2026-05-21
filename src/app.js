@@ -31,7 +31,7 @@ const axisColors = {
 
 let questions = [];
 let types = [];
-let assetManifest = { real: [], mascot: [] };
+let assetManifest = { real: [], mascot: [], cards: [] };
 let answers = [];
 let currentIndex = 0;
 
@@ -221,6 +221,7 @@ function renderResult(routeTypeId) {
   bindList("weaknesses", type.weaknesses);
   bind("best-match").textContent = type.bestMatch.map(typeName).join(" / ");
   bind("near-types").textContent = type.nearTypes.map(typeName).join(" / ");
+  hydrateCardBackground(bind("card-bg"), type.id);
   hydrateArt(bind("real-art"), "real", type.id);
   hydrateArt(bind("mascot-art"), "mascot", type.id);
   paintScores(result.normalizedScores);
@@ -362,13 +363,27 @@ async function drawDownloadCard(ctx, result) {
   bg.addColorStop(1, "#080b0f");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, 1080, 1920);
+  const cardBackground = assetManifest.cards.includes(type.id)
+    ? await loadCanvasImage(`./assets/images/cards/bg_${type.id}.webp`)
+    : null;
+  if (cardBackground) {
+    ctx.globalAlpha = 0.98;
+    drawCoverImage(ctx, cardBackground, 0, 0, 1080, 1920);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = "rgba(3,7,9,0.16)";
+    ctx.fillRect(0, 0, 1080, 1920);
+  }
   const frame = await loadCanvasImage("./assets/images/ui/card-frame.webp");
-  if (frame) {
+  if (frame && !cardBackground) {
     ctx.globalAlpha = 0.78;
     drawCoverImage(ctx, frame, 0, 0, 1080, 1920);
     ctx.globalAlpha = 1;
     ctx.fillStyle = "rgba(3,7,9,0.34)";
     ctx.fillRect(0, 0, 1080, 1920);
+  }
+  if (cardBackground) {
+    roundRect(ctx, 32, 32, 1016, 1856, 44, "rgba(0,0,0,0)", hexToRgba(accent, 0.62));
+    roundRect(ctx, 48, 48, 984, 1824, 34, "rgba(0,0,0,0)", "rgba(246,199,107,0.22)");
   }
   drawGlow(ctx, 260, 240, 360, hexToRgba(accent, 0.34));
   drawGlow(ctx, 830, 490, 390, hexToRgba(accent2, 0.24));
@@ -561,6 +576,13 @@ function hydrateArt(element, kind, typeId) {
   const src = `./assets/images/dinos/${kind}/${typeId}.webp`;
   element.classList.add("has-image");
   element.style.backgroundImage = `url("${src}")`;
+}
+
+function hydrateCardBackground(element, typeId) {
+  if (!element || !assetManifest.cards.includes(typeId)) return;
+  const src = `../assets/images/cards/bg_${typeId}.webp`;
+  element.classList.add("has-image");
+  element.style.setProperty("--type-card-bg", `url("${src}")`);
 }
 
 function emptyScores() {
