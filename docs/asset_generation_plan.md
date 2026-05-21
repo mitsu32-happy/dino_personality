@@ -1,0 +1,78 @@
+# アセット生成・実装計画
+
+このプロジェクトでは、主要ビジュアルアセットは原則としてイラスト生成で作成する。文字情報は画像に焼き込まず、HTML/CSS側で表示する。
+
+## 生成方針
+
+- 既存作品、映画、ゲーム、MBTI、16Personalities等に似せない。
+- 可愛いマスコット表現と、半リアルで迫力ある恐竜表現を両立する。
+- スマホ表示を主対象にし、暗い古代ジャングル、琥珀、DNA、化石、ネオン光を共通世界観にする。
+- 画像未配置でも破綻しないが、最終的には生成画像を優先表示する。
+- タイプ名や説明文などの日本語テキストは画像に含めない。
+- 生成後はプロジェクト内へコピーし、`assets/images/manifest.json` に反映する。
+
+## 共通アセット
+
+| ID | 保存先 | 用途 | 生成方式 | 備考 |
+| --- | --- | --- | --- | --- |
+| `hero-bg` | `assets/images/ui/hero-bg.webp` | トップページ背景 | 個別生成 | 文字なし。恐竜、DNA、琥珀、ジャングルの世界観。 |
+| `quiz-bg` | `assets/images/ui/quiz-bg.webp` | 診断ページ背景 | 個別生成 | 文字なし。設問カードを載せる余白を残す。 |
+| `dex-bg` | `assets/images/ui/dex-bg.webp` | 図鑑ページ背景 | 個別生成 | 文字なし。カード一覧の背景。 |
+| `card-frame` | `assets/images/ui/card-frame.webp` | 結果カード共通フレーム/背景質感 | 個別生成 | 9:16、文字なし。HTML要素を重ねる。 |
+| `button-primary` | `assets/images/ui/button-primary.webp` | 開始/保存ボタン背景 | 個別生成 | 横長ボタン用、文字なし。 |
+| `button-secondary` | `assets/images/ui/button-secondary.webp` | サブボタン背景 | 個別生成 | 横長ボタン用、文字なし。 |
+| `option-card-set` | `assets/images/ui/option-card-set.webp` | 5択カードの質感参照 | 個別生成 | 実装ではCSS背景/疑似要素に落とし込む。 |
+| `amber-icon` | `assets/images/ui/amber-icon.webp` | 装飾アイコン | 個別生成 | 透過不要。 |
+| `fossil-icon` | `assets/images/ui/fossil-icon.webp` | 装飾アイコン | 個別生成 | 透過不要。 |
+| `dna-glow` | `assets/images/ui/dna-glow.webp` | 背景装飾 | 個別生成 | 透過不要。 |
+
+## タイプ別アセット
+
+16タイプそれぞれに以下を生成する。
+
+| 種別 | 保存先 | 推奨サイズ | 用途 | 備考 |
+| --- | --- | --- | --- | --- |
+| リアル寄り恐竜 | `assets/images/dinos/real/{type_id}.webp` | 1600x1200 | 結果ページ、結果カード背景 | 半リアル、怖すぎない、迫力重視。 |
+| マスコット恐竜 | `assets/images/dinos/mascot/{type_id}.webp` | 1024x1024 | 結果カード、図鑑 | ころっと可愛い、SNS向き。 |
+| 結果カード背景 | `assets/images/cards/bg_{type_id}.webp` | 1080x1920 | 保存カード背景 | タイプの性格軸に合わせた色と雰囲気。文字なし。 |
+
+## 生成順序
+
+1. 共通アセットを生成してUI全体の質感を上げる。
+2. 優先タイプ4種の個別アセットを生成して実装パターンを固める。
+   - `tyranno`
+   - `raptor`
+   - `ankylo`
+   - `trike`
+3. 残り12タイプを4タイプずつ生成・反映する。
+4. 全16タイプの表示、図鑑、結果カード保存を検証する。
+
+## 優先タイプ4種の目的
+
+- `tyranno`: 攻撃性 + 慎重さ。強く、王者感のある結果画面の基準。
+- `raptor`: スピード + 攻撃性。動きと鋭さの基準。
+- `ankylo`: 慎重さ + 協調性。守りと安定感の基準。
+- `trike`: 協調性 + 慎重さ。優しさと強さの基準。
+
+## manifest更新ルール
+
+画像生成済みのタイプIDを `assets/images/manifest.json` に追加する。
+
+```json
+{
+  "real": ["tyranno"],
+  "mascot": ["tyranno"],
+  "cards": ["tyranno"],
+  "ui": ["hero-bg", "quiz-bg"]
+}
+```
+
+## 中断ポイント
+
+一度に全48個以上のタイプ別画像を生成すると品質確認が難しいため、以下の区切りで途中報告できる。
+
+- 共通アセット生成完了
+- 優先4タイプ生成完了
+- 8タイプ生成完了
+- 12タイプ生成完了
+- 16タイプ生成完了

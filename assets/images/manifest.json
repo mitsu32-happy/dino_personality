@@ -1,4 +1,6 @@
 {
-  "real": [],
-  "mascot": []
+  "real": ["tyranno"],
+  "mascot": ["tyranno"],
+  "cards": [],
+  "ui": ["hero-bg", "quiz-bg", "dex-bg", "card-frame", "button-primary", "button-secondary"]
 }

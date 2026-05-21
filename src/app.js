@@ -255,7 +255,7 @@ function renderDex() {
     card.style.setProperty("--card-accent", axisColors[type.primaryAxis]);
     card.style.setProperty("--card-accent-2", axisColors[type.secondaryAxis]);
     card.innerHTML = `
-      <div class="dex-art"></div>
+      <div class="dex-art" data-type-id="${type.id}"></div>
       <div class="dex-copy">
         <p>${String(index + 1).padStart(2, "0")} ${axisLabels[type.primaryAxis]}</p>
         <h2></h2>
@@ -264,6 +264,7 @@ function renderDex() {
     `;
     card.querySelector("h2").textContent = type.name;
     card.querySelector("span").textContent = type.dinosaur;
+    hydrateArt(card.querySelector(".dex-art"), "mascot", type.id);
     grid.append(card);
   });
 }
@@ -336,12 +337,12 @@ function drawRadarToContext(ctx, scores, centerX, centerY, radius, labelSize) {
   ctx.restore();
 }
 
-function saveResultImage(result) {
+async function saveResultImage(result) {
   const canvas = document.createElement("canvas");
   canvas.width = 1080;
   canvas.height = 1920;
   const ctx = canvas.getContext("2d");
-  drawDownloadCard(ctx, result);
+  await drawDownloadCard(ctx, result);
   const link = document.createElement("a");
   link.href = canvas.toDataURL("image/png");
   link.download = `dino-type-${result.type.id}-1080x1920.png`;
@@ -350,7 +351,7 @@ function saveResultImage(result) {
   if (message) message.textContent = "スマホ表示向けの1080x1920画像を書き出しました。";
 }
 
-function drawDownloadCard(ctx, result) {
+async function drawDownloadCard(ctx, result) {
   const { type, normalizedScores } = result;
   const accent = axisColors[type.primaryAxis];
   const accent2 = axisColors[type.secondaryAxis];
@@ -361,10 +362,36 @@ function drawDownloadCard(ctx, result) {
   bg.addColorStop(1, "#080b0f");
   ctx.fillStyle = bg;
   ctx.fillRect(0, 0, 1080, 1920);
+  const frame = await loadCanvasImage("./assets/images/ui/card-frame.webp");
+  if (frame) {
+    ctx.globalAlpha = 0.78;
+    drawCoverImage(ctx, frame, 0, 0, 1080, 1920);
+    ctx.globalAlpha = 1;
+    ctx.fillStyle = "rgba(3,7,9,0.34)";
+    ctx.fillRect(0, 0, 1080, 1920);
+  }
   drawGlow(ctx, 260, 240, 360, hexToRgba(accent, 0.34));
   drawGlow(ctx, 830, 490, 390, hexToRgba(accent2, 0.24));
   drawAmber(ctx, 180, 610, 112);
-  drawDownloadDino(ctx, 540, 730, accent, accent2);
+  const realImage = assetManifest.real.includes(type.id)
+    ? await loadCanvasImage(`./assets/images/dinos/real/${type.id}.webp`)
+    : null;
+  const mascotImage = assetManifest.mascot.includes(type.id)
+    ? await loadCanvasImage(`./assets/images/dinos/mascot/${type.id}.webp`)
+    : null;
+
+  if (realImage) {
+    ctx.save();
+    ctx.globalAlpha = 0.96;
+    drawContainImage(ctx, realImage, 105, 560, 870, 440);
+    ctx.restore();
+  } else {
+    drawDownloadDino(ctx, 540, 730, accent, accent2);
+  }
+
+  if (mascotImage) {
+    drawContainImage(ctx, mascotImage, 690, 710, 250, 250);
+  }
 
   ctx.fillStyle = "rgba(255,247,220,0.82)";
   ctx.font = "800 34px Yu Gothic UI, sans-serif";
@@ -415,6 +442,33 @@ function drawDownloadCard(ctx, result) {
   ctx.fillStyle = "rgba(255,247,220,0.7)";
   ctx.font = "600 28px Yu Gothic UI, sans-serif";
   wrapCanvasText(ctx, `注意ポイント: ${type.weaknesses[0]}`, 124, 1814, 840, 40, "left");
+}
+
+function loadCanvasImage(src) {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(img);
+    img.onerror = () => resolve(null);
+    img.src = src;
+  });
+}
+
+function drawCoverImage(ctx, img, x, y, width, height) {
+  const scale = Math.max(width / img.width, height / img.height);
+  const sw = width / scale;
+  const sh = height / scale;
+  const sx = (img.width - sw) / 2;
+  const sy = (img.height - sh) / 2;
+  ctx.drawImage(img, sx, sy, sw, sh, x, y, width, height);
+}
+
+function drawContainImage(ctx, img, x, y, width, height) {
+  const scale = Math.min(width / img.width, height / img.height);
+  const dw = img.width * scale;
+  const dh = img.height * scale;
+  const dx = x + (width - dw) / 2;
+  const dy = y + (height - dh) / 2;
+  ctx.drawImage(img, dx, dy, dw, dh);
 }
 
 function drawDownloadDino(ctx, x, y, accent, accent2) {
