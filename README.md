@@ -28,6 +28,24 @@ http://localhost:4173/
 - 結果画像保存
 - 16タイプ図鑑
 - 画像未配置時のプレースホルダー表示
+- スマホ表示前提の9:16結果カード
+- `1080x1920px` の結果画像保存
+
+## デザインモック
+
+実装前にイラスト生成でスマホ向けUIモックを作成し、以下に保存しています。
+
+```text
+docs/mockups/mobile-ui-mockup.png
+docs/mockups/implementation_basis.md
+```
+
+実装はこのモックと `docs/` 配下の設計書を基準にしています。検証用スクリーンショットは以下です。
+
+```text
+docs/mockups/implemented-home-390.png
+docs/mockups/implemented-result-390.png
+```
 
 ## データ
 
@@ -46,6 +64,7 @@ assets/images/dinos/real/{type_id}.webp
 assets/images/dinos/mascot/{type_id}.webp
 assets/images/cards/bg_{type_id}.webp
 assets/images/ui/logo.svg
+assets/images/manifest.json
 ```
 
 例:
@@ -54,6 +73,8 @@ assets/images/ui/logo.svg
 assets/images/dinos/real/tyranno.webp
 assets/images/dinos/mascot/tyranno.webp
 ```
+
+画像を追加したら、`assets/images/manifest.json` に表示可能な `type_id` を追加してください。画像未配置時は、通信エラーを出さずにCSSプレースホルダーを表示します。
 
 ## GitHub Pages公開方法
 

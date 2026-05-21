@@ -2,26 +2,26 @@
 <html lang="ja">
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#070c11">
     <meta name="description" content="24問であなたの恐竜タイプを診断する、独自ロジックのエンタメ性格診断サイト。">
     <title>恐竜タイプ診断</title>
     <link rel="icon" href="./assets/images/ui/logo.svg" type="image/svg+xml">
     <link rel="stylesheet" href="./src/styles.css">
   </head>
   <body>
-    <div class="shell">
-      <header class="site-header">
-        <a class="brand" href="#home" aria-label="恐竜タイプ診断 トップへ">
-          <img src="./assets/images/ui/logo.svg" alt="" width="38" height="38">
-          <span>恐竜タイプ診断</span>
+    <div class="site-frame">
+      <header class="app-header">
+        <a class="menu-dot" href="#home" aria-label="トップへ">
+          <img src="./assets/images/ui/logo.svg" alt="" width="32" height="32">
         </a>
-        <nav class="nav" aria-label="メインナビゲーション">
+        <nav class="pill-nav" aria-label="メインナビゲーション">
           <a href="#quiz">診断</a>
           <a href="#dex">図鑑</a>
         </nav>
       </header>
 
-      <main id="app" tabindex="-1">
+      <main id="app" class="app-main" tabindex="-1">
         <section class="loading-view" aria-live="polite">
           <p>古代データを読み込んでいます...</p>
         </section>
@@ -29,104 +29,126 @@
     </div>
 
     <template id="tpl-home">
-      <section class="hero view-panel">
-        <div class="hero-copy">
-          <p class="eyebrow">24 questions / 5 axes / 16 dino types</p>
-          <h1>あなたの中に眠る、古代の性格タイプを見つけよう。</h1>
-          <p class="lead">決断力、協調性、探究心、慎重さ、スピード感。5つの軸から、あなたに近い恐竜タイプを診断します。</p>
-          <div class="hero-actions">
-            <a class="button primary" href="#quiz">診断をはじめる</a>
-            <a class="button ghost" href="#dex">16タイプを見る</a>
-          </div>
-          <p class="notice">この診断は独自ロジックによるエンタメ性格診断です。</p>
+      <section class="screen home-screen">
+        <div class="hero-art" aria-hidden="true">
+          <div class="dna"></div>
+          <div class="fossil"></div>
+          <div class="amber-stone"></div>
+          <div class="real-dino"></div>
+          <div class="mascot-dino"></div>
         </div>
-        <div class="hero-visual" aria-hidden="true">
-          <div class="moon"></div>
-          <div class="amber"></div>
-          <div class="dino-scene">
-            <div class="dino-real"></div>
-            <div class="dino-mascot"></div>
-          </div>
+        <div class="home-copy">
+          <p class="small-label">Ancient personality scan</p>
+          <h1>恐竜タイプ<br>診断</h1>
+          <p>あなたの中に眠る、古代の個性を発掘しよう。</p>
         </div>
+        <a class="start-button" href="#quiz">
+          <strong>診断を開始</strong>
+          <span>24の質問であなたを診断</span>
+        </a>
+        <div class="feature-row" aria-label="診断の特徴">
+          <div><b>24</b><span>質問</span></div>
+          <div><b>5</b><span>診断軸</span></div>
+          <div><b>16</b><span>タイプ</span></div>
+        </div>
+        <p class="disclaimer">独自ロジックによるエンタメ性格診断です。MBTI等の既存診断とは関係ありません。</p>
       </section>
     </template>
 
     <template id="tpl-quiz">
-      <section class="quiz view-panel">
+      <section class="screen quiz-screen">
         <div class="quiz-top">
-          <button class="icon-button" data-action="back" type="button" aria-label="前の質問へ">←</button>
-          <div class="progress-wrap" aria-label="診断の進捗">
+          <button class="back-button" data-action="back" type="button" aria-label="前の質問へ">‹</button>
+          <div class="progress-box">
             <div class="progress-meta">
               <span data-bind="question-count"></span>
-              <span data-bind="progress-percent"></span>
+              <span data-bind="progress-text"></span>
             </div>
             <div class="progress-track"><div class="progress-bar" data-bind="progress-bar"></div></div>
           </div>
         </div>
-        <article class="question-card">
-          <p class="eyebrow" data-bind="question-id"></p>
-          <h2 data-bind="question-text"></h2>
-          <div class="options" data-bind="options"></div>
+        <article class="question-panel">
+          <p class="small-label" data-bind="question-id"></p>
+          <h1 data-bind="question-text"></h1>
+          <div class="option-list" data-bind="options"></div>
         </article>
+        <div class="mascot-hint" aria-hidden="true">
+          <div class="mini-mascot"></div>
+          <p>直感で選んでね。正解はないよ！</p>
+        </div>
       </section>
     </template>
 
     <template id="tpl-result">
-      <section class="result view-panel">
-        <div class="result-card" id="result-card">
-          <div class="result-heading">
-            <p class="eyebrow">Your dino type</p>
-            <h1 data-bind="type-name"></h1>
-            <p class="dino-name" data-bind="dino-name"></p>
-            <p class="lead" data-bind="type-catch"></p>
-          </div>
-          <div class="result-visuals">
-            <figure class="image-slot real">
-              <img data-bind="real-image" alt="">
-              <figcaption data-bind="real-caption"></figcaption>
-            </figure>
-            <figure class="image-slot mascot">
-              <img data-bind="mascot-image" alt="">
-              <figcaption>マスコット</figcaption>
-            </figure>
-          </div>
-          <div class="result-grid">
-            <div class="radar-panel">
-              <canvas id="radar" width="320" height="320" aria-label="5軸スコアのレーダーチャート"></canvas>
+      <section class="result-screen">
+        <div class="result-card-shell">
+          <article id="result-card" class="share-card" aria-label="保存用結果カード">
+            <div class="card-bg"></div>
+            <header class="card-topline">
+              <span>恐竜タイプ診断</span>
+              <time data-bind="diagnosis-date"></time>
+            </header>
+            <div class="type-heading">
+              <p>あなたの恐竜タイプは...</p>
+              <h1 data-bind="type-name"></h1>
+              <h2 data-bind="dino-name"></h2>
             </div>
-            <div class="score-panel" data-bind="score-list"></div>
-          </div>
-          <p class="description" data-bind="description"></p>
-          <div class="detail-columns">
+            <div class="dino-stage">
+              <div class="real-result-art" data-bind="real-art"></div>
+              <div class="mascot-result-art" data-bind="mascot-art"></div>
+            </div>
+            <p class="catch-copy" data-bind="type-catch"></p>
+            <div class="card-insight">
+              <div class="radar-wrap">
+                <canvas id="radar" width="320" height="320" aria-label="5軸レーダーチャート"></canvas>
+              </div>
+              <div class="score-list" data-bind="score-list"></div>
+            </div>
+            <div class="card-strength">
+              <span>あなたの強み</span>
+              <p data-bind="card-strengths"></p>
+            </div>
+          </article>
+        </div>
+
+        <div class="result-actions">
+          <button class="primary-button" data-action="save-card" type="button">結果画像を保存</button>
+          <a class="secondary-button" href="#quiz">もう一度診断</a>
+          <a class="secondary-button" href="#dex">図鑑を見る</a>
+        </div>
+        <p class="helper-text" data-bind="save-message" aria-live="polite"></p>
+
+        <section class="result-detail">
+          <h2 data-bind="detail-title"></h2>
+          <p data-bind="description"></p>
+          <div class="detail-grid">
             <section>
-              <h2>強み</h2>
+              <h3>強み</h3>
               <ul data-bind="strengths"></ul>
             </section>
             <section>
-              <h2>注意ポイント</h2>
+              <h3>注意ポイント</h3>
               <ul data-bind="weaknesses"></ul>
             </section>
+            <section>
+              <h3>相性の良いタイプ</h3>
+              <p data-bind="best-match"></p>
+            </section>
+            <section>
+              <h3>近いタイプ</h3>
+              <p data-bind="near-types"></p>
+            </section>
           </div>
-          <div class="relations">
-            <div><span>相性の良いタイプ</span><p data-bind="best-match"></p></div>
-            <div><span>近いタイプ</span><p data-bind="near-types"></p></div>
-          </div>
-        </div>
-        <div class="result-actions">
-          <button class="button primary" data-action="save-card" type="button">結果画像を保存</button>
-          <a class="button ghost" href="#quiz">もう一度診断</a>
-          <a class="button ghost" href="#dex">図鑑を見る</a>
-        </div>
-        <p class="helper-text" data-bind="save-message" aria-live="polite"></p>
+        </section>
       </section>
     </template>
 
     <template id="tpl-dex">
-      <section class="dex view-panel">
-        <div class="section-heading">
-          <p class="eyebrow">Dino index</p>
+      <section class="screen dex-screen">
+        <div class="dex-heading">
+          <p class="small-label">Dino index</p>
           <h1>16タイプ図鑑</h1>
-          <p class="lead">各タイプの雰囲気を先に見たいときはこちら。カードを開くと詳細を確認できます。</p>
+          <p>気になるタイプをタップして、結果カード形式で見てみよう。</p>
         </div>
         <div class="dex-grid" data-bind="dex-grid"></div>
       </section>
