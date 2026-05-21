@@ -1,0 +1,17 @@
+{
+  "axes": ["aggression", "cooperation", "curiosity", "caution", "speed"],
+  "axisLabels": {
+    "aggression": "攻撃性",
+    "cooperation": "協調性",
+    "curiosity": "探究心",
+    "caution": "慎重さ",
+    "speed": "スピード感"
+  },
+  "recommendedQuestionCount": 24,
+  "tieBreak": [
+    "直近10問の該当軸スコアが高い方を優先",
+    "dino_types.jsonのpriorityが小さいタイプを優先"
+  ],
+  "resultMappingPolicy": "primaryAxisとsecondaryAxisを基本に、突出軸・バランス型・低スコア補正で16タイプへ割り当てる。実装時はdino_types.jsonのprimaryAxis/secondaryAxisを第一候補として使用し、完全一致がない場合は近似タイプを選ぶ。",
+  "normalization": "各軸スコアを最大値で割り、0〜100に正規化してレーダーチャートに表示する。"
+}

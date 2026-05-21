@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96" role="img" aria-labelledby="title">
+  <title>恐竜タイプ診断 ロゴ</title>
+  <defs>
+    <linearGradient id="shell" x1="16" y1="14" x2="78" y2="82" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#4de0aa"/>
+      <stop offset=".52" stop-color="#42d5e8"/>
+      <stop offset="1" stop-color="#ffba54"/>
+    </linearGradient>
+  </defs>
+  <rect width="96" height="96" rx="24" fill="#101923"/>
+  <path fill="url(#shell)" d="M19 59c0-18 14-33 33-33 12 0 23 6 29 16-9-2-16 1-21 7-6 7-15 11-27 11H19Z"/>
+  <path fill="#ffba54" d="M55 24c9 0 17 5 22 13-8-1-15 1-20 7-2-7-6-13-12-18 3-1 6-2 10-2Z"/>
+  <circle cx="63" cy="39" r="4" fill="#071012"/>
+  <path fill="#4de0aa" d="M29 59h11v14H29zM53 58h11v15H53z"/>
+  <path fill="#23343d" d="M16 60c8 4 16 5 24 4-11 10-22 12-31 6 4-1 6-5 7-10Z"/>
+</svg>
