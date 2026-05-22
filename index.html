@@ -30,6 +30,15 @@
 
     <template id="tpl-home">
       <section class="screen home-screen">
+        <div class="home-hud" aria-label="トップメニュー">
+          <a class="menu-dot" href="#home" aria-label="トップへ">
+            <img src="./assets/images/ui/home-button.webp" alt="" width="44" height="44">
+          </a>
+          <nav class="pill-nav" aria-label="メインナビゲーション">
+            <a class="nav-quiz" href="#quiz">診断</a>
+            <a class="nav-dex" href="#dex">図鑑</a>
+          </nav>
+        </div>
         <div class="hero-art" aria-hidden="true">
           <div class="dna"></div>
           <div class="fossil"></div>
@@ -46,6 +55,7 @@
           <strong>診断を開始</strong>
           <span>古代の個性を発掘する</span>
         </a>
+        <div class="home-pedestal" aria-hidden="true"></div>
         <p class="mascot-speech">あなたの中に眠る、古代の個性を発掘しよう。</p>
       </section>
     </template>

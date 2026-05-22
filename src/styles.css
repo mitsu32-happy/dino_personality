@@ -104,23 +104,7 @@ a {
 }
 
 body[data-route="home"] .app-header {
-  position: absolute;
-  top: calc(env(safe-area-inset-top) + 16px);
-  right: 24px;
-  left: 24px;
-  width: auto;
-  padding: 0;
-  backdrop-filter: none;
-}
-
-body[data-route="home"] .pill-nav {
-  margin-right: 52px;
-}
-
-body[data-route="home"] .pill-nav a {
-  width: 68px;
-  padding-left: 20px;
-  font-size: 0.82rem;
+  display: none;
 }
 
 .menu-dot,
@@ -246,6 +230,28 @@ body[data-route="home"] .pill-nav a {
   box-shadow: var(--shadow);
 }
 
+.home-hud {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  left: 14px;
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.home-hud .pill-nav {
+  margin-right: clamp(56px, 15vw, 72px);
+}
+
+.home-hud .pill-nav a {
+  width: 62px;
+  padding-left: 18px;
+  font-size: 0.78rem;
+}
+
 .hero-art {
   position: absolute;
   inset: 0;
@@ -272,9 +278,9 @@ body[data-route="home"] .pill-nav a {
 .professor-mascot {
   position: absolute;
   right: 10px;
-  bottom: 94px;
-  z-index: 3;
-  width: clamp(112px, 32vw, 146px);
+  bottom: 56px;
+  z-index: 4;
+  width: clamp(120px, 34vw, 154px);
   height: auto;
   filter: drop-shadow(0 22px 26px rgba(0, 0, 0, 0.56));
 }
@@ -402,7 +408,7 @@ body[data-route="home"] .pill-nav a {
 
 .title-logo {
   display: block;
-  width: min(100%, 306px);
+  width: min(100%, 258px);
   height: auto;
   margin: 6px auto 0;
   filter: drop-shadow(0 20px 28px rgba(0, 0, 0, 0.58));
@@ -431,8 +437,8 @@ body[data-route="home"] .pill-nav a {
   flex-direction: column;
   gap: 4px;
   min-height: 74px;
-  width: min(100%, 320px);
-  margin: 46px auto 0;
+  width: min(100%, 278px);
+  margin: 42px auto 0;
   border-radius: 22px;
   color: #fff8d7;
   background:
@@ -442,12 +448,23 @@ body[data-route="home"] .pill-nav a {
   box-shadow: 0 0 0 4px rgba(246, 199, 107, 0.08), 0 16px 40px rgba(0, 0, 0, 0.4);
 }
 
+.home-pedestal {
+  position: absolute;
+  bottom: 22px;
+  left: 6px;
+  z-index: 2;
+  width: min(74%, 300px);
+  aspect-ratio: 980 / 622;
+  background: url("../assets/images/ui/home-pedestal.webp") center / contain no-repeat;
+  filter: drop-shadow(0 26px 32px rgba(0, 0, 0, 0.58));
+}
+
 .mascot-speech {
   position: absolute;
-  right: 126px;
-  bottom: 188px;
-  z-index: 4;
-  width: min(190px, calc(100% - 154px));
+  right: 134px;
+  bottom: 154px;
+  z-index: 5;
+  width: min(184px, calc(100% - 158px));
   margin: 0;
   padding: 12px 13px;
   border: 1px solid rgba(246, 199, 107, 0.48);
@@ -1111,6 +1128,21 @@ body[data-route="home"] .pill-nav a {
     margin-right: 0;
   }
 
+  .home-hud {
+    right: 18px;
+    left: 18px;
+  }
+
+  .home-hud .pill-nav {
+    margin-right: 86px;
+  }
+
+  .home-hud .pill-nav a {
+    width: 54px;
+    padding-left: 15px;
+    font-size: 0.72rem;
+  }
+
   .pill-nav a {
     width: 62px;
     padding-left: 18px;
@@ -1118,18 +1150,24 @@ body[data-route="home"] .pill-nav a {
   }
 
   .title-logo {
-    width: min(100%, 264px);
+    width: min(100%, 226px);
   }
 
   .professor-mascot {
-    width: 104px;
+    width: 114px;
     right: 6px;
-    bottom: 90px;
+    bottom: 54px;
+  }
+
+  .home-pedestal {
+    left: 2px;
+    bottom: 24px;
+    width: 72%;
   }
 
   .mascot-speech {
-    right: 102px;
-    bottom: 176px;
+    right: 110px;
+    bottom: 142px;
     width: min(164px, calc(100% - 126px));
     padding: 10px 11px;
     font-size: 0.78rem;
