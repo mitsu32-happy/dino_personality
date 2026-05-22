@@ -28,6 +28,24 @@ const axisColors = {
   caution: "#f6c76b",
   speed: "#c36ef1",
 };
+const questionLineBreaks = {
+  q01: ["突然ピンチになったら、", "まずどう動く？"],
+  q02: ["新しいプロジェクトに", "参加するとき、", "最初に気になることは？"],
+  q03: ["友人が迷っているとき、", "あなたはどう助ける？"],
+  q04: ["あなたが一番ストレスを", "感じやすい状況は？"],
+  q05: ["チームで自然と", "担当しやすい役割は？"],
+  q07: ["初対面の場での", "あなたに近いのは？"],
+  q09: ["意見が分かれたとき、", "あなたは？"],
+  q12: ["新しいアイデアを", "思いついたら？"],
+  q13: ["リーダーになったとき", "大事にすることは？"],
+  q16: ["物事を始める前に", "することは？"],
+  q17: ["あなたの集中力が", "上がる場面は？"],
+  q18: ["周囲から誤解されやすい", "ところは？"],
+  q19: ["ゲームで好きな", "プレイスタイルに", "近いのは？"],
+  q20: ["あなたが大切にしたい", "評価は？"],
+  q23: ["あなたにとって", "理想のチームは？"],
+  q24: ["最後に、", "自分らしいと思う言葉は？"],
+};
 
 let questions = [];
 let types = [];
@@ -98,7 +116,7 @@ function paintQuestion() {
   bind("progress-text").textContent = `/ ${questions.length}`;
   bind("progress-bar").style.width = `${progress}%`;
   bind("question-id").textContent = `${Math.round(progress)}% complete`;
-  bind("question-text").textContent = question.text;
+  renderQuestionText(bind("question-text"), question.text, question.id);
 
   const options = bind("options");
   options.replaceChildren();
@@ -121,12 +139,12 @@ function paintQuestion() {
 
   const backButton = document.querySelector('[data-action="back"]');
   backButton.disabled = currentIndex === 0;
-  backButton.addEventListener("click", () => {
+  backButton.onclick = () => {
     if (currentIndex <= 0) return;
     currentIndex -= 1;
     persistProgress();
     paintQuestion();
-  });
+  };
 }
 
 function chooseOption(optionIndex, option) {
@@ -614,6 +632,60 @@ function radarPoint(index, centerX, centerY, radius) {
 
 function bind(name) {
   return app.querySelector(`[data-bind="${name}"]`);
+}
+
+function renderQuestionText(element, text, questionId) {
+  element.replaceChildren();
+  const lines = questionLineBreaks[questionId] ?? splitQuestionText(text);
+  lines.forEach((line, index) => {
+    if (index > 0) element.append(document.createElement("br"));
+    element.append(document.createTextNode(line));
+  });
+}
+
+function splitQuestionText(text) {
+  if (text.length <= 15) return [text];
+
+  const preferredIndex = text.indexOf("、") + 1;
+  if (isReadableBreak(text, preferredIndex)) {
+    return [text.slice(0, preferredIndex), text.slice(preferredIndex)];
+  }
+
+  const target = Math.ceil(text.length / 2);
+  const bestBreak = collectQuestionBreakPoints(text)
+    .filter((point) => isReadableBreak(text, point))
+    .sort((a, b) => Math.abs(a - target) - Math.abs(b - target))[0];
+
+  if (bestBreak) return [text.slice(0, bestBreak), text.slice(bestBreak)];
+  return [text.slice(0, target), text.slice(target)];
+}
+
+function collectQuestionBreakPoints(text) {
+  const points = new Set();
+  const breakAfter = ["とき", "場面", "こと", "もの", "ところ", "言葉", "評価", "変更"];
+  const breakAfterSingle = ["は", "で", "に", "が", "を"];
+
+  breakAfter.forEach((token) => {
+    let index = text.indexOf(token);
+    while (index !== -1) {
+      points.add(index + token.length);
+      index = text.indexOf(token, index + token.length);
+    }
+  });
+
+  breakAfterSingle.forEach((token) => {
+    let index = text.indexOf(token);
+    while (index !== -1) {
+      points.add(index + token.length);
+      index = text.indexOf(token, index + token.length);
+    }
+  });
+
+  return [...points];
+}
+
+function isReadableBreak(text, point) {
+  return point >= 7 && text.length - point >= 5 && point <= 18;
 }
 
 function bindList(name, items) {
