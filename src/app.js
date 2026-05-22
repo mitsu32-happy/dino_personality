@@ -79,10 +79,10 @@ async function fetchJson(path) {
 }
 
 function render() {
-  const [route, id] = location.hash.replace(/^#/, "").split("/");
+  const [route, id, source] = location.hash.replace(/^#/, "").split("/");
   if (!route || route === "home") return renderHome();
   if (route === "quiz") return renderQuiz();
-  if (route === "result") return renderResult(id);
+  if (route === "result") return renderResult(id, source);
   if (route === "dex") return renderDex();
   renderHome();
 }
@@ -217,16 +217,18 @@ function selectType(primaryAxis, secondaryAxis, rawScores) {
   })[0];
 }
 
-function renderResult(routeTypeId) {
+function renderResult(routeTypeId, source) {
   document.body.dataset.route = "result";
+  const isDexPreview = source === "dex";
   const stored = readLastResult();
-  const result = stored?.type?.id === routeTypeId || !routeTypeId ? stored : previewResult(routeTypeId);
+  const result = !isDexPreview && (stored?.type?.id === routeTypeId || !routeTypeId) ? stored : previewResult(routeTypeId);
   if (!result) {
     location.hash = "quiz";
     return;
   }
 
   setView(templates.result);
+  app.querySelector(".result-screen").classList.toggle("is-dex-preview", isDexPreview);
   const { type } = result;
   document.documentElement.style.setProperty("--accent", axisColors[type.primaryAxis]);
   document.documentElement.style.setProperty("--accent-2", axisColors[type.secondaryAxis]);
@@ -248,7 +250,9 @@ function renderResult(routeTypeId) {
   paintScores(result.normalizedScores);
   drawRadar(document.querySelector("#radar"), result.normalizedScores, 160, 160, 105, 13);
 
-  document.querySelector('[data-action="save-card"]').addEventListener("click", () => saveResultImage(result));
+  if (!isDexPreview) {
+    document.querySelector('[data-action="save-card"]').addEventListener("click", () => saveResultImage(result));
+  }
 }
 
 function previewResult(typeId) {
@@ -274,7 +278,7 @@ function renderDex() {
   types.forEach((type, index) => {
     const card = document.createElement("a");
     card.className = "dex-card";
-    card.href = `#result/${type.id}`;
+    card.href = `#result/${type.id}/dex`;
     card.style.setProperty("--card-accent", axisColors[type.primaryAxis]);
     card.style.setProperty("--card-accent-2", axisColors[type.secondaryAxis]);
     card.innerHTML = `
@@ -287,7 +291,7 @@ function renderDex() {
     `;
     card.querySelector("h2").textContent = type.name;
     card.querySelector("span").textContent = type.dinosaur;
-    hydrateArt(card.querySelector(".dex-art"), "mascot", type.id);
+    hydrateDexCard(card.querySelector(".dex-art"), type.id);
     grid.append(card);
   });
 }
@@ -474,11 +478,11 @@ async function drawDownloadCard(ctx, result) {
   ctx.fillText("あなたの強み", 124, 1582);
   ctx.fillStyle = "#fff7dc";
   ctx.font = "800 36px Yu Gothic UI, sans-serif";
-  type.strengths.forEach((item, index) => ctx.fillText(`・${item}`, 124, 1648 + index * 48));
+  type.strengths.forEach((item, index) => ctx.fillText(`・${item}`, 124, 1644 + index * 44));
 
   ctx.fillStyle = "rgba(255,247,220,0.7)";
-  ctx.font = "600 28px Yu Gothic UI, sans-serif";
-  wrapCanvasText(ctx, `注意ポイント: ${type.weaknesses[0]}`, 124, 1814, 840, 40, "left");
+  ctx.font = "600 26px Yu Gothic UI, sans-serif";
+  wrapCanvasText(ctx, `注意ポイント: ${type.weaknesses[0]}`, 124, 1790, 840, 38, "left");
 }
 
 function loadCanvasImage(src) {
@@ -597,6 +601,16 @@ function hydrateArt(element, kind, typeId) {
   if (!assetManifest[kind]?.includes(typeId)) return;
   const src = `./assets/images/dinos/${kind}/${typeId}.webp`;
   element.classList.add("has-image");
+  element.style.backgroundImage = `url("${src}")`;
+}
+
+function hydrateDexCard(element, typeId) {
+  if (!assetManifest.dexCards?.includes(typeId)) {
+    hydrateArt(element, "real", typeId);
+    return;
+  }
+  const src = `./assets/images/dex_cards/${typeId}.webp`;
+  element.classList.add("has-image", "has-dex-card");
   element.style.backgroundImage = `url("${src}")`;
 }
 
