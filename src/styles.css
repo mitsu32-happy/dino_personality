@@ -90,6 +90,10 @@ a {
   padding: env(safe-area-inset-top) 12px calc(24px + env(safe-area-inset-bottom));
 }
 
+body[data-route="home"] .site-frame {
+  width: min(390px, 100vw);
+}
+
 .app-header {
   position: sticky;
   top: 0;
@@ -221,7 +225,7 @@ body[data-route="home"] .app-header {
   overflow: hidden;
   border: 1px solid rgba(246, 199, 107, 0.3);
   border-radius: 26px;
-  padding: 82px 18px 24px;
+  padding: 80px 18px 24px;
   background:
     linear-gradient(180deg, rgba(5, 9, 12, 0.06), rgba(4, 8, 10, 0.28) 42%, rgba(4, 8, 10, 0.92)),
     url("../assets/images/ui/hero-bg.webp") center / cover no-repeat,
@@ -233,8 +237,8 @@ body[data-route="home"] .app-header {
 .home-hud {
   position: absolute;
   top: 14px;
-  right: 14px;
-  left: 14px;
+  right: 54px;
+  left: 18px;
   z-index: 6;
   display: flex;
   align-items: center;
@@ -243,13 +247,13 @@ body[data-route="home"] .app-header {
 }
 
 .home-hud .pill-nav {
-  margin-right: clamp(56px, 15vw, 72px);
+  margin-right: 0;
 }
 
 .home-hud .pill-nav a {
-  width: 62px;
-  padding-left: 18px;
-  font-size: 0.78rem;
+  width: 54px;
+  padding-left: 14px;
+  font-size: 0.74rem;
 }
 
 .hero-art {
@@ -277,10 +281,10 @@ body[data-route="home"] .app-header {
 
 .professor-mascot {
   position: absolute;
-  right: 10px;
-  bottom: 56px;
+  right: 8px;
+  bottom: 42px;
   z-index: 4;
-  width: clamp(120px, 34vw, 154px);
+  width: clamp(126px, 36vw, 158px);
   height: auto;
   filter: drop-shadow(0 22px 26px rgba(0, 0, 0, 0.56));
 }
@@ -408,9 +412,9 @@ body[data-route="home"] .app-header {
 
 .title-logo {
   display: block;
-  width: min(100%, 258px);
+  width: min(100%, 338px);
   height: auto;
-  margin: 6px auto 0;
+  margin: 0 auto;
   filter: drop-shadow(0 20px 28px rgba(0, 0, 0, 0.58));
 }
 
@@ -426,7 +430,6 @@ body[data-route="home"] .app-header {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid rgba(246, 199, 107, 0.5);
   cursor: pointer;
   text-align: center;
 }
@@ -435,25 +438,26 @@ body[data-route="home"] .app-header {
   position: relative;
   z-index: 2;
   flex-direction: column;
-  gap: 4px;
-  min-height: 74px;
-  width: min(100%, 278px);
-  margin: 42px auto 0;
-  border-radius: 22px;
+  gap: 0;
+  min-height: 88px;
+  width: min(100%, 318px);
+  margin: 20px auto 0;
+  padding: 4px 56px 30px 36px;
+  border: 0;
+  border-radius: 999px;
   color: #fff8d7;
   background:
-    linear-gradient(180deg, rgba(28, 150, 115, 0.3), rgba(9, 82, 76, 0.28)),
-    url("../assets/images/ui/button-primary.webp") center / 100% 100% no-repeat,
-    var(--panel-strong);
-  box-shadow: 0 0 0 4px rgba(246, 199, 107, 0.08), 0 16px 40px rgba(0, 0, 0, 0.4);
+    linear-gradient(180deg, rgba(2, 14, 13, 0.02), rgba(2, 14, 13, 0.08)),
+    url("../assets/images/ui/home-start-button.webp") center / 100% 100% no-repeat;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
 }
 
 .home-pedestal {
   position: absolute;
-  bottom: 22px;
-  left: 6px;
+  bottom: 14px;
+  left: 0;
   z-index: 2;
-  width: min(74%, 300px);
+  width: min(72%, 294px);
   aspect-ratio: 980 / 622;
   background: url("../assets/images/ui/home-pedestal.webp") center / contain no-repeat;
   filter: drop-shadow(0 26px 32px rgba(0, 0, 0, 0.58));
@@ -461,10 +465,10 @@ body[data-route="home"] .app-header {
 
 .mascot-speech {
   position: absolute;
-  right: 134px;
-  bottom: 154px;
+  right: 128px;
+  bottom: 142px;
   z-index: 5;
-  width: min(184px, calc(100% - 158px));
+  width: min(188px, calc(100% - 150px));
   margin: 0;
   padding: 12px 13px;
   border: 1px solid rgba(246, 199, 107, 0.48);
@@ -472,9 +476,9 @@ body[data-route="home"] .app-header {
   color: #fff7dc;
   background: rgba(6, 18, 20, 0.82);
   box-shadow: 0 16px 30px rgba(0, 0, 0, 0.35), inset 0 0 22px rgba(81, 223, 154, 0.08);
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   font-weight: 800;
-  line-height: 1.65;
+  line-height: 1.6;
 }
 
 .mascot-speech::after {
@@ -491,14 +495,19 @@ body[data-route="home"] .app-header {
 }
 
 .start-button strong {
-  font-size: 1.45rem;
+  font-size: 1.38rem;
   letter-spacing: 0.03em;
+  line-height: 1.05;
+  transform: translateY(-1px);
 }
 
 .start-button span,
 .feature-row span {
   color: #ddcfaa;
-  font-size: 0.82rem;
+  font-size: 0.58rem;
+  line-height: 1;
+  white-space: nowrap;
+  transform: translateY(-3px);
 }
 
 .feature-row {
@@ -1129,17 +1138,17 @@ body[data-route="home"] .app-header {
   }
 
   .home-hud {
-    right: 18px;
+    right: 42px;
     left: 18px;
   }
 
   .home-hud .pill-nav {
-    margin-right: 86px;
+    margin-right: 0;
   }
 
   .home-hud .pill-nav a {
     width: 54px;
-    padding-left: 15px;
+    padding-left: 14px;
     font-size: 0.72rem;
   }
 
@@ -1150,27 +1159,42 @@ body[data-route="home"] .app-header {
   }
 
   .title-logo {
-    width: min(100%, 226px);
+    width: min(100%, 258px);
+  }
+
+  .start-button {
+    min-height: 78px;
+    width: min(100%, 264px);
+    margin-top: 16px;
+    padding: 3px 46px 26px 30px;
+  }
+
+  .start-button strong {
+    font-size: 1.25rem;
+  }
+
+  .start-button span {
+    font-size: 0.53rem;
   }
 
   .professor-mascot {
-    width: 114px;
-    right: 6px;
-    bottom: 54px;
+    width: 108px;
+    right: 4px;
+    bottom: 44px;
   }
 
   .home-pedestal {
-    left: 2px;
-    bottom: 24px;
-    width: 72%;
+    left: 0;
+    bottom: 16px;
+    width: 66%;
   }
 
   .mascot-speech {
-    right: 110px;
-    bottom: 142px;
-    width: min(164px, calc(100% - 126px));
+    right: 100px;
+    bottom: 130px;
+    width: min(168px, calc(100% - 116px));
     padding: 10px 11px;
-    font-size: 0.78rem;
+    font-size: 0.74rem;
     line-height: 1.55;
   }
 

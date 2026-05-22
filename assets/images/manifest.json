@@ -2,5 +2,5 @@
   "real": ["tyranno", "raptor", "ankylo", "trike", "troodon", "brachio", "carno", "parasauro", "spino", "deino", "iguanodon", "galli", "stego", "ovi", "allo", "maia"],
   "mascot": ["tyranno", "raptor", "ankylo", "trike", "troodon", "brachio", "carno", "parasauro", "spino", "deino", "iguanodon", "galli", "stego", "ovi", "allo", "maia"],
   "cards": ["tyranno", "raptor", "ankylo", "trike", "troodon", "brachio", "carno", "parasauro", "spino", "deino", "iguanodon", "galli", "stego", "ovi", "allo", "maia"],
-  "ui": ["hero-bg", "quiz-bg", "dex-bg", "card-frame", "button-primary", "button-secondary", "home-button", "nav-quiz", "nav-dex", "title-logo", "professor-mascot", "home-pedestal"]
+  "ui": ["hero-bg", "quiz-bg", "dex-bg", "card-frame", "button-primary", "button-secondary", "home-button", "nav-quiz", "nav-dex", "title-logo", "professor-mascot", "home-pedestal", "home-start-button"]
 }
