@@ -83,7 +83,7 @@ a {
 }
 
 .site-frame {
-  width: min(var(--phone-width), 100%);
+  width: min(var(--phone-width), 100vw);
   min-height: 100vh;
   margin: 0 auto;
   padding: env(safe-area-inset-top) 12px calc(24px + env(safe-area-inset-bottom));
@@ -97,37 +97,60 @@ a {
   align-items: center;
   justify-content: space-between;
   gap: 12px;
+  width: min(100%, calc(100vw - 24px));
   padding: 14px 0 10px;
   backdrop-filter: blur(18px);
 }
 
 .menu-dot,
 .pill-nav a {
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 44px;
-  border: 1px solid var(--line);
-  background: rgba(8, 14, 18, 0.68);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.28);
+  border: 0;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.36));
 }
 
 .menu-dot {
-  width: 44px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
+}
+
+.menu-dot img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
 }
 
 .pill-nav {
   display: flex;
-  gap: 8px;
+  gap: 2px;
+  margin-right: 40px;
 }
 
 .pill-nav a {
-  min-width: 64px;
-  padding: 8px 14px;
+  width: 74px;
+  min-height: 46px;
+  padding: 8px 10px 9px 22px;
   border-radius: 999px;
-  color: var(--gold);
-  font-weight: 800;
+  color: #fff7dc;
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  font-size: 0.9rem;
+  font-weight: 900;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.8), 0 0 10px rgba(0, 0, 0, 0.6);
+}
+
+.pill-nav .nav-quiz {
+  background-image: url("../assets/images/ui/nav-quiz.webp");
+}
+
+.pill-nav .nav-dex {
+  background-image: url("../assets/images/ui/nav-dex.webp");
 }
 
 .app-main {
@@ -164,6 +187,17 @@ a {
   text-transform: uppercase;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .loading-view,
 .error-view {
   display: grid;
@@ -182,7 +216,7 @@ a {
   overflow: hidden;
   border: 1px solid rgba(246, 199, 107, 0.3);
   border-radius: 26px;
-  padding: 24px 18px 18px;
+  padding: 22px 18px 24px;
   background:
     linear-gradient(180deg, rgba(5, 9, 12, 0.06), rgba(4, 8, 10, 0.28) 42%, rgba(4, 8, 10, 0.92)),
     url("../assets/images/ui/hero-bg.webp") center / cover no-repeat,
@@ -212,6 +246,16 @@ a {
 .home-screen .real-dino,
 .home-screen .mascot-dino {
   opacity: 0;
+}
+
+.professor-mascot {
+  position: absolute;
+  right: 0;
+  bottom: 120px;
+  z-index: 3;
+  width: clamp(126px, 36vw, 152px);
+  height: auto;
+  filter: drop-shadow(0 22px 26px rgba(0, 0, 0, 0.56));
 }
 
 .dna {
@@ -329,16 +373,17 @@ a {
 .home-copy {
   position: relative;
   z-index: 2;
+  display: grid;
+  justify-items: start;
   padding: 14px 0 0;
 }
 
-.home-copy h1 {
-  margin: 8px 0 10px;
-  color: #ffdb82;
-  font-size: clamp(2.85rem, 17vw, 4.2rem);
-  line-height: 0.95;
-  letter-spacing: 0;
-  text-shadow: 0 5px 0 rgba(75, 42, 14, 0.62), 0 0 28px rgba(246, 199, 107, 0.44);
+.title-logo {
+  display: block;
+  width: min(100%, 330px);
+  height: auto;
+  margin: 4px 0 2px -10px;
+  filter: drop-shadow(0 20px 28px rgba(0, 0, 0, 0.58));
 }
 
 .home-copy p:not(.small-label),
@@ -364,7 +409,7 @@ a {
   flex-direction: column;
   gap: 4px;
   min-height: 74px;
-  margin-top: 18px;
+  margin-top: 16px;
   border-radius: 22px;
   color: #fff8d7;
   background:
@@ -1008,8 +1053,18 @@ a {
     padding-inline: 8px;
   }
 
-  .home-copy h1 {
-    font-size: 3rem;
+  .pill-nav {
+    margin-right: 82px;
+  }
+
+  .pill-nav a {
+    width: 68px;
+    padding-left: 20px;
+    font-size: 0.82rem;
+  }
+
+  .title-logo {
+    width: min(100%, 304px);
   }
 
   .option-button {

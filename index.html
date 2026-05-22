@@ -13,11 +13,11 @@
     <div class="site-frame">
       <header class="app-header">
         <a class="menu-dot" href="#home" aria-label="トップへ">
-          <img src="./assets/images/ui/logo.svg" alt="" width="32" height="32">
+          <img src="./assets/images/ui/home-button.webp" alt="" width="44" height="44">
         </a>
         <nav class="pill-nav" aria-label="メインナビゲーション">
-          <a href="#quiz">診断</a>
-          <a href="#dex">図鑑</a>
+          <a class="nav-quiz" href="#quiz">診断</a>
+          <a class="nav-dex" href="#dex">図鑑</a>
         </nav>
       </header>
 
@@ -35,23 +35,18 @@
           <div class="fossil"></div>
           <div class="amber-stone"></div>
           <div class="real-dino"></div>
-          <div class="mascot-dino"></div>
+          <img class="professor-mascot" src="./assets/images/ui/professor-mascot.webp" alt="">
         </div>
         <div class="home-copy">
           <p class="small-label">Ancient personality scan</p>
-          <h1>恐竜タイプ<br>診断</h1>
+          <h1 class="sr-only">恐竜タイプ診断</h1>
+          <img class="title-logo" src="./assets/images/ui/title-logo.webp" alt="恐竜タイプ診断">
           <p>あなたの中に眠る、古代の個性を発掘しよう。</p>
         </div>
         <a class="start-button" href="#quiz">
           <strong>診断を開始</strong>
-          <span>24の質問であなたを診断</span>
+          <span>古代の個性を発掘する</span>
         </a>
-        <div class="feature-row" aria-label="診断の特徴">
-          <div><b>24</b><span>質問</span></div>
-          <div><b>5</b><span>診断軸</span></div>
-          <div><b>16</b><span>タイプ</span></div>
-        </div>
-        <p class="disclaimer">独自ロジックによるエンタメ性格診断です。MBTI等の既存診断とは関係ありません。</p>
       </section>
     </template>
 
