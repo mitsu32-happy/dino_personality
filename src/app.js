@@ -413,7 +413,6 @@ async function drawDownloadCard(ctx, result) {
   }
   drawGlow(ctx, 260, 240, 360, hexToRgba(accent, 0.34));
   drawGlow(ctx, 830, 490, 390, hexToRgba(accent2, 0.24));
-  drawAmber(ctx, 180, 610, 112);
   const realImage = assetManifest.real.includes(type.id)
     ? await loadCanvasImage(`./assets/images/dinos/real/${type.id}.webp`)
     : null;
@@ -426,8 +425,6 @@ async function drawDownloadCard(ctx, result) {
     ctx.globalAlpha = 0.96;
     drawContainImage(ctx, realImage, 105, 560, 870, 440);
     ctx.restore();
-  } else {
-    drawDownloadDino(ctx, 540, 730, accent, accent2);
   }
 
   if (mascotImage) {
@@ -510,43 +507,6 @@ function drawContainImage(ctx, img, x, y, width, height) {
   const dx = x + (width - dw) / 2;
   const dy = y + (height - dh) / 2;
   ctx.drawImage(img, dx, dy, dw, dh);
-}
-
-function drawDownloadDino(ctx, x, y, accent, accent2) {
-  ctx.save();
-  ctx.translate(x, y);
-  ctx.fillStyle = hexToRgba(accent, 0.94);
-  ctx.beginPath();
-  ctx.ellipse(0, 0, 320, 178, -0.08, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = hexToRgba(accent2, 0.86);
-  ctx.beginPath();
-  ctx.ellipse(246, -92, 118, 84, 0.1, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = "rgba(6,16,18,0.9)";
-  ctx.beginPath();
-  ctx.ellipse(-302, -20, 154, 48, -0.18, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = "#fff7dc";
-  ctx.beginPath();
-  ctx.arc(276, -108, 17, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.fillStyle = "#071012";
-  ctx.beginPath();
-  ctx.arc(281, -108, 7, 0, Math.PI * 2);
-  ctx.fill();
-  ctx.restore();
-}
-
-function drawAmber(ctx, x, y, size) {
-  const gradient = ctx.createLinearGradient(x - size, y - size, x + size, y + size);
-  gradient.addColorStop(0, "#ffc760");
-  gradient.addColorStop(0.6, "#e99028");
-  gradient.addColorStop(1, "#8f361f");
-  ctx.fillStyle = gradient;
-  ctx.beginPath();
-  ctx.ellipse(x, y, size * 0.75, size, -0.16, 0, Math.PI * 2);
-  ctx.fill();
 }
 
 function drawGlow(ctx, x, y, radius, color) {
