@@ -83,6 +83,7 @@ a {
 }
 
 .site-frame {
+  position: relative;
   width: min(var(--phone-width), 100vw);
   min-height: 100vh;
   margin: 0 auto;
@@ -100,6 +101,26 @@ a {
   width: min(100%, calc(100vw - 24px));
   padding: 14px 0 10px;
   backdrop-filter: blur(18px);
+}
+
+body[data-route="home"] .app-header {
+  position: absolute;
+  top: calc(env(safe-area-inset-top) + 16px);
+  right: 24px;
+  left: 24px;
+  width: auto;
+  padding: 0;
+  backdrop-filter: none;
+}
+
+body[data-route="home"] .pill-nav {
+  margin-right: 52px;
+}
+
+body[data-route="home"] .pill-nav a {
+  width: 68px;
+  padding-left: 20px;
+  font-size: 0.82rem;
 }
 
 .menu-dot,
@@ -211,12 +232,12 @@ a {
   position: relative;
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
-  min-height: calc(100svh - 76px);
+  justify-content: flex-start;
+  min-height: calc(100svh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 24px);
   overflow: hidden;
   border: 1px solid rgba(246, 199, 107, 0.3);
   border-radius: 26px;
-  padding: 22px 18px 24px;
+  padding: 82px 18px 24px;
   background:
     linear-gradient(180deg, rgba(5, 9, 12, 0.06), rgba(4, 8, 10, 0.28) 42%, rgba(4, 8, 10, 0.92)),
     url("../assets/images/ui/hero-bg.webp") center / cover no-repeat,
@@ -250,10 +271,10 @@ a {
 
 .professor-mascot {
   position: absolute;
-  right: 0;
-  bottom: 120px;
+  right: 10px;
+  bottom: 94px;
   z-index: 3;
-  width: clamp(126px, 36vw, 152px);
+  width: clamp(112px, 32vw, 146px);
   height: auto;
   filter: drop-shadow(0 22px 26px rgba(0, 0, 0, 0.56));
 }
@@ -374,15 +395,16 @@ a {
   position: relative;
   z-index: 2;
   display: grid;
-  justify-items: start;
-  padding: 14px 0 0;
+  justify-items: center;
+  padding: 0;
+  text-align: center;
 }
 
 .title-logo {
   display: block;
-  width: min(100%, 330px);
+  width: min(100%, 306px);
   height: auto;
-  margin: 4px 0 2px -10px;
+  margin: 6px auto 0;
   filter: drop-shadow(0 20px 28px rgba(0, 0, 0, 0.58));
 }
 
@@ -409,7 +431,8 @@ a {
   flex-direction: column;
   gap: 4px;
   min-height: 74px;
-  margin-top: 16px;
+  width: min(100%, 320px);
+  margin: 46px auto 0;
   border-radius: 22px;
   color: #fff8d7;
   background:
@@ -417,6 +440,37 @@ a {
     url("../assets/images/ui/button-primary.webp") center / 100% 100% no-repeat,
     var(--panel-strong);
   box-shadow: 0 0 0 4px rgba(246, 199, 107, 0.08), 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.mascot-speech {
+  position: absolute;
+  right: 126px;
+  bottom: 188px;
+  z-index: 4;
+  width: min(190px, calc(100% - 154px));
+  margin: 0;
+  padding: 12px 13px;
+  border: 1px solid rgba(246, 199, 107, 0.48);
+  border-radius: 16px;
+  color: #fff7dc;
+  background: rgba(6, 18, 20, 0.82);
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.35), inset 0 0 22px rgba(81, 223, 154, 0.08);
+  font-size: 0.86rem;
+  font-weight: 800;
+  line-height: 1.65;
+}
+
+.mascot-speech::after {
+  position: absolute;
+  right: -12px;
+  bottom: 24px;
+  width: 20px;
+  height: 20px;
+  content: "";
+  border-top: 1px solid rgba(246, 199, 107, 0.48);
+  border-right: 1px solid rgba(246, 199, 107, 0.48);
+  background: rgba(6, 18, 20, 0.82);
+  transform: rotate(45deg);
 }
 
 .start-button strong {
@@ -1054,17 +1108,32 @@ a {
   }
 
   .pill-nav {
-    margin-right: 82px;
+    margin-right: 0;
   }
 
   .pill-nav a {
-    width: 68px;
-    padding-left: 20px;
-    font-size: 0.82rem;
+    width: 62px;
+    padding-left: 18px;
+    font-size: 0.78rem;
   }
 
   .title-logo {
-    width: min(100%, 304px);
+    width: min(100%, 264px);
+  }
+
+  .professor-mascot {
+    width: 104px;
+    right: 6px;
+    bottom: 90px;
+  }
+
+  .mascot-speech {
+    right: 102px;
+    bottom: 176px;
+    width: min(164px, calc(100% - 126px));
+    padding: 10px 11px;
+    font-size: 0.78rem;
+    line-height: 1.55;
   }
 
   .option-button {

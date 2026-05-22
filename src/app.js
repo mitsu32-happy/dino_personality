@@ -75,10 +75,12 @@ function setView(template) {
 }
 
 function renderHome() {
+  document.body.dataset.route = "home";
   setView(templates.home);
 }
 
 function renderQuiz() {
+  document.body.dataset.route = "quiz";
   restoreProgress();
   if (answers.length >= questions.length) {
     answers = [];
@@ -198,6 +200,7 @@ function selectType(primaryAxis, secondaryAxis, rawScores) {
 }
 
 function renderResult(routeTypeId) {
+  document.body.dataset.route = "result";
   const stored = readLastResult();
   const result = stored?.type?.id === routeTypeId || !routeTypeId ? stored : previewResult(routeTypeId);
   if (!result) {
@@ -247,6 +250,7 @@ function previewResult(typeId) {
 }
 
 function renderDex() {
+  document.body.dataset.route = "dex";
   setView(templates.dex);
   const grid = bind("dex-grid");
   types.forEach((type, index) => {
